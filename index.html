@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>タイピングゲーム JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+      }
+      .question {
+        color: black;
+        font-size: 4vw;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .marker {
+        color: #f00;
+        font-size: 4vw;
+        font-weight: bold;
+        margin-bottom: 20px;
+        background-color: skyblue;
+      }
+      .text {
+        width: 95%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+      }
+      .text:focus, .text:focus-visible {
+        border: none;
+        outline: none;
+      }
+
+      .message {
+        color: black;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 4rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .button {
+        padding: 10px 20px;
+        font-size: 1.5rem;
+        background-color: skyblue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+        .hidden {
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>
+        <p style="background-color:black; font-family:'游ゴシック', cursive; color:orange; font-size:140%; text-align:center; border: 2px solid black; padding: 10px; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); font-weight: bold; letter-spacing: 1px;">タイピングゲーム</p></h1>
+    <div id="game" class="container">
+      <div class="question">
+        <span id="entered" class="marker"></span>
+        <span id="remained"></span>
+      </div>
+      <input type="text" id="inputText" class="text" autofocus/>
+    </div>
+
+    <div id="message" class="text-container hidden">
+        <div class="message">
+            ゲームクリア！お疲れさまでした！<br><br>
+            <button id="replayBtn" class="button">もう一度プレイする</button>
+        </div>
+    </div>
+
+    <script>
+      'use strict';
+
+      <!-- 問題文リスト -->
+        const questions = [
+            'JavaScript',
+            'HTML',
+            'CSS',
+            'TypeScript',
+            'React',
+            'Vue',
+            'Angular',
+            'Node.js',
+            'Express',
+            'MongoDB',
+            'MySQL',
+            'Firebase',
+            'AWS',
+            'GCP',
+            'Azure',
+            'Docker',
+            'Kubernetes',
+            'GitHub',
+            'GitLab',
+            'Bitbucket',
+        ];
+
+        const entered = document.getElementById('entered');
+        const remained = document.getElementById('remained');
+        const inputText = document.getElementById('inputText');
+        const game = document.getElementById('game');
+        const message = document.getElementById('message');
+        const replayBtn = document.getElementById('replayBtn');
+
+        let remainedTextWords = remained.textContent.split('');
+        let enteredTextWords = [];
+        let currentKey;
+        let currentText;
+
+        const setQuestiion = () => {
+            currentKey = Math.floor(Math.random() * questions.length);
+            currentText = questions[currentKey];
+
+            questions.splice(currentKey, 1);
+
+            entered.textContent = '';
+            remained.textContent = currentText;
+            inputText.value = '';
+
+            enteredTextWords = [];
+            remainedTextWords = currentText.split('');
+        };
+
+        setQuestiion();
+
+        document.addEventListener('input', (e) => {
+            if (remainedTextWords[0] === e.data) {
+                enteredTextWords.push(remainedTextWords[0]);
+                remainedTextWords.shift();
+
+                entered.textContent = enteredTextWords.join('');
+                remained.textContent = remainedTextWords.join('');
+
+                if (remainedTextWords.length === 0) {
+                    if(questions.length === 0) {
+                        game.classList.add('hidden');
+                        message.classList.remove('hidden');
+                    } else {
+                        setQuestiion();
+                    }
+                }
+            }
+        });
+
+        replayBtn.addEventListener('click', () => {
+            window.location.reload();
+        });
+    </script>
+  </body>
+</html>
