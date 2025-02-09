@@ -43,7 +43,8 @@
         outline: none;
         text-align: center;
       }
-      .text:focus, .text:focus-visible {
+      .text:focus,
+      .text:focus-visible {
         border: none;
         outline: none;
       }
@@ -65,106 +66,122 @@
         border-radius: 5px;
         cursor: pointer;
       }
-        .hidden {
-            display: none;
-        }
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <h1>
-        <p style="background-color:black; font-family:'游ゴシック', cursive; color:orange; font-size:140%; text-align:center; border: 2px solid black; padding: 10px; box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); font-weight: bold; letter-spacing: 1px;">タイピングゲーム</p></h1>
+      <p
+        style="
+          background-color: black;
+          font-family: '游ゴシック', cursive;
+          color: orange;
+          font-size: 140%;
+          text-align: center;
+          border: 2px solid black;
+          padding: 10px;
+          box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+          font-weight: bold;
+          letter-spacing: 1px;
+        "
+      >
+        タイピングゲーム
+      </p>
+    </h1>
     <div id="game" class="container">
       <div class="question">
         <span id="entered" class="marker"></span>
         <span id="remained"></span>
       </div>
-      <input type="text" id="inputText" class="text" autofocus/>
+      <input type="text" id="inputText" class="text" autofocus />
     </div>
 
     <div id="message" class="text-container hidden">
-        <div class="message">
-            ゲームクリア！お疲れさまでした！<br><br>
-            <button id="replayBtn" class="button">もう一度プレイする</button>
-        </div>
+      <div class="message">
+        ゲームクリア！お疲れさまでした！<br /><br />
+        <button id="replayBtn" class="button">もう一度プレイする</button>
+      </div>
     </div>
 
     <script>
-      'use strict';
+      "use strict";
 
       <!-- 問題文リスト -->
-        const questions = [
-            'JavaScript',
-            'HTML',
-            'CSS',
-            'TypeScript',
-            'React',
-            'Vue',
-            'Angular',
-            'Node.js',
-            'Express',
-            'MongoDB',
-            'MySQL',
-            'Firebase',
-            'AWS',
-            'GCP',
-            'Azure',
-            'Docker',
-            'Kubernetes',
-            'GitHub',
-            'GitLab',
-            'Bitbucket',
-        ];
+      const questions = [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "TypeScript",
+        "React",
+        "Vue",
+        "Angular",
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "MySQL",
+        "Firebase",
+        "AWS",
+        "GCP",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "GitHub",
+        "GitLab",
+        "Bitbucket",
+      ];
 
-        const entered = document.getElementById('entered');
-        const remained = document.getElementById('remained');
-        const inputText = document.getElementById('inputText');
-        const game = document.getElementById('game');
-        const message = document.getElementById('message');
-        const replayBtn = document.getElementById('replayBtn');
+      const entered = document.getElementById("entered");
+      const remained = document.getElementById("remained");
+      const inputText = document.getElementById("inputText");
+      const game = document.getElementById("game");
+      const message = document.getElementById("message");
+      const replayBtn = document.getElementById("replayBtn");
 
-        let remainedTextWords = remained.textContent.split('');
-        let enteredTextWords = [];
-        let currentKey;
-        let currentText;
+      let remainedTextWords = remained.textContent.split("");
+      let enteredTextWords = [];
+      let currentKey;
+      let currentText;
 
-        const setQuestiion = () => {
-            currentKey = Math.floor(Math.random() * questions.length);
-            currentText = questions[currentKey];
+      const setQuestiion = () => {
+        currentKey = Math.floor(Math.random() * questions.length);
+        currentText = questions[currentKey];
 
-            questions.splice(currentKey, 1);
+        questions.splice(currentKey, 1);
 
-            entered.textContent = '';
-            remained.textContent = currentText;
-            inputText.value = '';
+        entered.textContent = "";
+        remained.textContent = currentText;
+        inputText.value = "";
 
-            enteredTextWords = [];
-            remainedTextWords = currentText.split('');
-        };
+        enteredTextWords = [];
+        remainedTextWords = currentText.split("");
+      };
 
-        setQuestiion();
+      setQuestiion();
 
-        document.addEventListener('input', (e) => {
-            if (remainedTextWords[0] === e.data) {
-                enteredTextWords.push(remainedTextWords[0]);
-                remainedTextWords.shift();
+      document.addEventListener("input", (e) => {
+        if (remainedTextWords[0] === e.data) {
+          enteredTextWords.push(remainedTextWords[0]);
+          remainedTextWords.shift();
 
-                entered.textContent = enteredTextWords.join('');
-                remained.textContent = remainedTextWords.join('');
+          entered.textContent = enteredTextWords.join("");
+          remained.textContent = remainedTextWords.join("");
 
-                if (remainedTextWords.length === 0) {
-                    if(questions.length === 0) {
-                        game.classList.add('hidden');
-                        message.classList.remove('hidden');
-                    } else {
-                        setQuestiion();
-                    }
-                }
+          if (remainedTextWords.length === 0) {
+            if (questions.length === 0) {
+              game.classList.add("hidden");
+              message.classList.remove("hidden");
+            } else {
+              setQuestiion();
             }
-        });
+          }
+        }
+      });
 
-        replayBtn.addEventListener('click', () => {
-            window.location.reload();
-        });
+      replayBtn.addEventListener("click", () => {
+        window.location.reload();
+      });
     </script>
   </body>
 </html>
